@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Language Translator Team</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        .member-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: #2c3e50;
+        }
+        .member-name {
+            color: #2c3e50;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .member-role {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 2rem;
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        .project-info {
+            text-align: center;
+            margin: 3rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sign Language Translator Project</h1>
+        <p>Breaking communication barriers through technology</p>
+    </div>
+
+    <div class="container">
+        <!-- Replace the "Try Our Translator" button with a simple link -->
+        <div class="project-info">
+            <h2>Our Mission</h2>
+            <p>Empowering the deaf and mute community by bridging the communication gap using advanced technology.</p>
+            <a href="/" class="cta-button">Back to Translator</a>
+        </div>
+
+        <h2 style="text-align: center; color: #2c3e50;">Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <div class="member-img">M</div>
+                <h3 class="member-name">Madhumitha</h3>
+            </div>
+            <div class="team-member">
+                <div class="member-img">L</div>
+                <h3 class="member-name">Logitha</h3>
+            </div>
+            <div class="team-member">
+                <div class="member-img">L</div>
+                <h3 class="member-name">Laya Shree</h3>
+            </div>
+            <div class="team-member">
+                <div class="member-img">M</div>
+                <h3 class="member-name">Monika</h3>
+            </div>
+            <div class="team-member">
+                <div class="member-img">L</div>
+                <h3 class="member-name">Lavanya</h3>
+            </div>
+            <div class="team-member">
+                <div class="member-img">H</div>
+                <h3 class="member-name">Harsshanna</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

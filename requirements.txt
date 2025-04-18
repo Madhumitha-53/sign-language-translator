@@ -1,0 +1,7 @@
+flask==2.0.1
+opencv-python==4.7.0.72
+mediapipe==0.9.0.1
+numpy==1.23.5
+tensorflow==2.12.0
+pillow==9.5.0
+gunicorn==20.1.0
