@@ -4,23 +4,51 @@ import mediapipe as mp
 from demo import calculate_finger_positions, get_finger_states, recognize_letter
 
 st.set_page_config(page_title="Sign Language Translator", layout="wide")
-st.title("Welcome to Sign Language Translator")
 
-st.write("## Choose a page:")
+# Initialize MediaPipe hands
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.7)
+mp_draw = mp.solutions.drawing_utils
 
-col1, col2 = st.columns(2)
+# Initialize session state
+if 'text_history' not in st.session_state:
+    st.session_state.text_history = []
+    st.session_state.last_prediction = ''
+    st.session_state.prediction_counter = 0
 
-with col1:
-    if st.button("📹 Translator", use_container_width=True):
-        st.switch_page("pages/1_Translator.py")
-    st.write("Real-time sign language translation")
+# Navigation
+page = st.radio("Navigation", ["Home", "Translator", "Portfolio"], horizontal=True, label_visibility="hidden")
 
-with col2:
-    if st.button("👥 Portfolio", use_container_width=True):
-        st.switch_page("pages/2_Portfolio.py")
-    st.write("Meet our team and learn about the project")
+if page == "Home":
+    # Home page content remains the same
+    ...
 
-# Add some styling
+elif page == "Translator":
+    st.title("Sign Language Translator")
+    
+    # Create columns for layout
+    col1, col2 = st.columns([2, 1])
+
+    with col1:
+        video_feed = st.empty()
+
+    with col2:
+        current_letter = st.empty()
+        word_display = st.empty()
+        
+        if st.button("Clear Text"):
+            st.session_state.text_history = []
+            current_letter.empty()
+            word_display.empty()
+            st.success("Text cleared successfully!")
+
+    process_frame()
+
+elif page == "Portfolio":
+    # Portfolio page content remains the same
+    ...
+
+# Add styling
 st.markdown("""
     <style>
     div.stButton > button {
@@ -35,34 +63,6 @@ st.markdown("""
     }
     </style>
     """, unsafe_allow_html=True)
-
-# Initialize MediaPipe hands
-mp_hands = mp.solutions.hands
-hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.7)
-mp_draw = mp.solutions.drawing_utils
-
-# Create columns for layout
-col1, col2 = st.columns([2, 1])
-
-with col1:
-    video_feed = st.empty()
-
-with col2:
-    current_letter = st.empty()
-    word_display = st.empty()
-    
-    # Improved Clear Text button with confirmation
-    if st.button("Clear Text"):
-        st.session_state.text_history = []
-        current_letter.empty()
-        word_display.empty()
-        st.success("Text cleared successfully!")
-
-# Initialize session state with additional properties
-if 'text_history' not in st.session_state:
-    st.session_state.text_history = []
-    st.session_state.last_prediction = ''
-    st.session_state.prediction_counter = 0
 
 def process_frame():
     cap = cv2.VideoCapture(0)
