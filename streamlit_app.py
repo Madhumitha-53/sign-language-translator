@@ -4,8 +4,13 @@ import mediapipe as mp
 from demo import calculate_finger_positions, get_finger_states, recognize_letter
 
 st.set_page_config(page_title="Sign Language Translator", layout="wide")
+st.title("Welcome to Sign Language Translator")
 
-st.title("Sign Language Translator")
+st.write("""
+## Choose a page from the sidebar:
+- **Translator**: Real-time sign language translation
+- **Portfolio**: Meet our team and learn about the project
+""")
 
 # Initialize MediaPipe hands
 mp_hands = mp.solutions.hands
