@@ -103,10 +103,14 @@ st.markdown("""
 def process_frame():
     try:
         cap = cv2.VideoCapture(0)
+        if not cap.isOpened():
+            st.error("Unable to access webcam. Please check your camera connection.")
+            return
+            
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
-                st.error("Failed to access webcam")
+                st.error("Failed to capture frame from webcam")
                 break
 
             frame = cv2.flip(frame, 1)
