@@ -20,25 +20,11 @@ if 'text_history' not in st.session_state:
 page = st.radio("Navigation", ["Home", "Translator", "Portfolio"], horizontal=True, label_visibility="hidden")
 
 if page == "Home":
-    st.title("Welcome to Sign Language Translator")
-    
-    # Translator Section
-    st.header("📹 Translator")
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        video_feed = st.empty()
-    
-    with col2:
-        current_letter = st.empty()
-        word_display = st.empty()
-        if st.button("Clear Text", key="home_clear"):
-            st.session_state.text_history = []
-            current_letter.empty()
-            word_display.empty()
-            st.success("Text cleared successfully!")
-    
-    process_frame()
+    st.title("Welcome to Sign Language Letter Translator")
+    st.markdown("""
+    ### Click **Translator** to translate your gestures
+    ### Click **Portfolio** to know about our team
+    """)
 
 elif page == "Translator":
     st.title("Sign Language Translator")
@@ -61,6 +47,21 @@ elif page == "Translator":
 elif page == "Portfolio":
     st.title("Our Team")
     
+    # Team Members
+    st.header("Team Members")
+    
+    team_members = [
+        "Madhumitha",
+        "Logitha",
+        "Layashree",
+        "Lavanya",
+        "Monika",
+        "Harsshanna"
+    ]
+    
+    for member in team_members:
+        st.subheader(f"👩‍💻 {member}")
+    
     # Project Description
     st.header("About the Project")
     st.write("""
@@ -69,28 +70,6 @@ elif page == "Portfolio":
     This project aims to bridge communication gaps and make sign language more accessible 
     to everyone.
     """)
-    
-    # Team Members
-    st.header("Team Members")
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.subheader("Madhumitha")
-        st.write("""
-        **Role**: Lead Developer
-        - Implemented computer vision algorithms
-        - Developed gesture recognition system
-        - Created the user interface
-        """)
-    
-    with col2:
-        st.subheader("Team Member 2")
-        st.write("""
-        **Role**: Project Manager
-        - Coordinated project development
-        - Conducted user testing
-        - Managed documentation
-        """)
     
     # Technologies Used
     st.header("Technologies Used")
