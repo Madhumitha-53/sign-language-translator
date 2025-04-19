@@ -20,33 +20,86 @@ if 'text_history' not in st.session_state:
 page = st.radio("Navigation", ["Home", "Translator", "Portfolio"], horizontal=True, label_visibility="hidden")
 
 if page == "Home":
-    # Home page content remains the same
-    ...
-
-elif page == "Translator":
-    st.title("Sign Language Translator")
+    st.title("Welcome to Sign Language Translator")
     
-    # Create columns for layout
+    # Translator Section
+    st.header("📹 Translator")
     col1, col2 = st.columns([2, 1])
-
+    
     with col1:
         video_feed = st.empty()
-
+    
     with col2:
         current_letter = st.empty()
         word_display = st.empty()
-        
-        if st.button("Clear Text"):
+        if st.button("Clear Text", key="home_clear"):
             st.session_state.text_history = []
             current_letter.empty()
             word_display.empty()
             st.success("Text cleared successfully!")
+    
+    process_frame()
 
+elif page == "Translator":
+    st.title("Sign Language Translator")
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        video_feed = st.empty()
+    
+    with col2:
+        current_letter = st.empty()
+        word_display = st.empty()
+        if st.button("Clear Text", key="translator_clear"):
+            st.session_state.text_history = []
+            current_letter.empty()
+            word_display.empty()
+            st.success("Text cleared successfully!")
+    
     process_frame()
 
 elif page == "Portfolio":
-    # Portfolio page content remains the same
-    ...
+    st.title("Our Team")
+    
+    # Project Description
+    st.header("About the Project")
+    st.write("""
+    The Sign Language Translator is an innovative application that uses computer vision 
+    and machine learning to translate sign language gestures into text in real-time. 
+    This project aims to bridge communication gaps and make sign language more accessible 
+    to everyone.
+    """)
+    
+    # Team Members
+    st.header("Team Members")
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Madhumitha")
+        st.write("""
+        **Role**: Lead Developer
+        - Implemented computer vision algorithms
+        - Developed gesture recognition system
+        - Created the user interface
+        """)
+    
+    with col2:
+        st.subheader("Team Member 2")
+        st.write("""
+        **Role**: Project Manager
+        - Coordinated project development
+        - Conducted user testing
+        - Managed documentation
+        """)
+    
+    # Technologies Used
+    st.header("Technologies Used")
+    st.write("""
+    - Computer Vision (OpenCV)
+    - Machine Learning (MediaPipe)
+    - Web Development (Streamlit)
+    - Python Programming
+    """)
 
 # Add styling
 st.markdown("""
@@ -61,35 +114,47 @@ st.markdown("""
     div.stButton > button:hover {
         background-color: #2980b9;
     }
+    .stRadio > label {
+        font-size: 24px;
+        font-weight: bold;
+    }
     </style>
     """, unsafe_allow_html=True)
 
 def process_frame():
-    cap = cv2.VideoCapture(0)
-    while cap.isOpened():
-        ret, frame = cap.read()
-        if not ret:
-            continue
+    try:
+        cap = cv2.VideoCapture(0)
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                st.error("Failed to access webcam")
+                break
 
-        frame = cv2.flip(frame, 1)
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = hands.process(rgb_frame)
-        
-        if results.multi_hand_landmarks:
-            for hand_landmarks in results.multi_hand_landmarks:
-                mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-                
-                points = calculate_finger_positions(hand_landmarks)
-                finger_states = get_finger_states(points)
-                letter = recognize_letter(finger_states, points)
-                
-                if letter != '?':
-                    current_letter.write(f"Current Letter: {letter}")
-                    if not st.session_state.text_history or st.session_state.text_history[-1] != letter:
-                        st.session_state.text_history.append(letter)
-                        word_display.write(f"Word: {''.join(st.session_state.text_history)}")
+            frame = cv2.flip(frame, 1)
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            results = hands.process(rgb_frame)
+            
+            if results.multi_hand_landmarks:
+                for hand_landmarks in results.multi_hand_landmarks:
+                    mp_draw.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+                    
+                    points = calculate_finger_positions(hand_landmarks)
+                    finger_states = get_finger_states(points)
+                    letter = recognize_letter(finger_states, points)
+                    
+                    if letter != '?':
+                        current_letter.write(f"Current Letter: {letter}")
+                        if not st.session_state.text_history or st.session_state.text_history[-1] != letter:
+                            st.session_state.text_history.append(letter)
+                            word_display.write(f"Word: {''.join(st.session_state.text_history)}")
 
-        video_feed.image(frame, channels="RGB")
+            video_feed.image(frame, channels="RGB")
+    except Exception as e:
+        st.error(f"An error occurred: {str(e)}")
+    finally:
+        if 'cap' in locals():
+            cap.release()
 
 if __name__ == "__main__":
-    process_frame()
+    if page in ["Home", "Translator"]:
+        process_frame()
