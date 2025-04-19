@@ -16,21 +16,24 @@ mp_draw = mp.solutions.drawing_utils
 col1, col2 = st.columns([2, 1])
 
 with col1:
-    # Video feed placeholder
     video_feed = st.empty()
 
 with col2:
-    # Text display
     current_letter = st.empty()
     word_display = st.empty()
     
-    # Control buttons
+    # Improved Clear Text button with confirmation
     if st.button("Clear Text"):
         st.session_state.text_history = []
+        current_letter.empty()
+        word_display.empty()
+        st.success("Text cleared successfully!")
 
-# Initialize session state
+# Initialize session state with additional properties
 if 'text_history' not in st.session_state:
     st.session_state.text_history = []
+    st.session_state.last_prediction = ''
+    st.session_state.prediction_counter = 0
 
 def process_frame():
     cap = cv2.VideoCapture(0)
