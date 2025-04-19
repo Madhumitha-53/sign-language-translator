@@ -102,9 +102,25 @@ st.markdown("""
 
 def process_frame():
     try:
+        # Add webcam start button
+        if 'camera_started' not in st.session_state:
+            st.session_state.camera_started = False
+        
+        if not st.session_state.camera_started:
+            if st.button("Start Camera"):
+                st.session_state.camera_started = True
+                st.experimental_rerun()
+            return
+        
+        if st.button("Stop Camera"):
+            st.session_state.camera_started = False
+            st.experimental_rerun()
+            return
+            
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
-            st.error("Unable to access webcam. Please check your camera connection.")
+            st.error("Unable to access webcam. Please check your camera connection and browser permissions.")
+            st.info("Make sure to allow camera access in your browser when prompted.")
             return
             
         while cap.isOpened():
