@@ -6,11 +6,35 @@ from demo import calculate_finger_positions, get_finger_states, recognize_letter
 st.set_page_config(page_title="Sign Language Translator", layout="wide")
 st.title("Welcome to Sign Language Translator")
 
-st.write("""
-## Choose a page from the sidebar:
-- **Translator**: Real-time sign language translation
-- **Portfolio**: Meet our team and learn about the project
-""")
+st.write("## Choose a page:")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("📹 Translator", use_container_width=True):
+        st.switch_page("pages/1_Translator.py")
+    st.write("Real-time sign language translation")
+
+with col2:
+    if st.button("👥 Portfolio", use_container_width=True):
+        st.switch_page("pages/2_Portfolio.py")
+    st.write("Meet our team and learn about the project")
+
+# Add some styling
+st.markdown("""
+    <style>
+    div.stButton > button {
+        background-color: #3498db;
+        color: white;
+        font-size: 20px;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    div.stButton > button:hover {
+        background-color: #2980b9;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 # Initialize MediaPipe hands
 mp_hands = mp.solutions.hands
