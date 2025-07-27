@@ -1,0 +1,19 @@
+<<<<<<< HEAD
+flask==2.0.1
+streamlit==1.29.0
+opencv-python-headless==4.8.1.78
+mediapipe==0.10.21
+numpy==1.26.0
+tensorflow==2.16.1
+pillow==10.0.0
+protobuf==4.25.3
+=======
+flask==2.0.1
+streamlit==1.29.0
+opencv-python-headless==4.8.1.78
+mediapipe==0.10.21
+numpy==1.26.0
+tensorflow==2.16.1
+pillow==10.0.0
+protobuf==4.25.3
+>>>>>>> 210163bdec435feb0b05ff6e6949204cc76920b0
